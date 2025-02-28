@@ -27,6 +27,12 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
         ? "home"
         : document.URL.split("/").reverse()[0]
     );
+    window.addEventListener("resize", () => {
+      this.setState({
+        isCollapsed: window.innerWidth < 768,
+      });
+      this.props.handleCollapse(window.innerWidth < 768);
+    });
   }
   handleSidebar = (mode: string) => {
     this.setState({ mode: mode });
@@ -223,26 +229,9 @@ class Sidebar extends React.Component<SidebarProps, SidebarState> {
           >
             <span className="icon-menu sidebar-list"></span>
           </div>
-
-          <img
-            src={
-              ConfigService.getReaderConfig("appSkin") === "night" ||
-              (ConfigService.getReaderConfig("appSkin") === "system" &&
-                ConfigService.getReaderConfig("isOSNight") === "yes")
-                ? require(`../../assets/images/logo-dark${
-                    this.props.isAuthed ? "-pro" : ""
-                  }.png`)
-                : require(`../../assets/images/logo-light${
-                    this.props.isAuthed ? "-pro" : ""
-                  }.png`)
-            }
-            alt=""
-            onClick={() => {
-              this.handleJump("https://koodoreader.com");
-            }}
-            style={this.state.isCollapsed ? { display: "none" } : {}}
-            className="logo"
-          />
+          <div className="logo">
+            <a className="title" style={this.state.isCollapsed ? { display: "none" } : {}} href="http://byt-reader.vercel.app" target="_blank" rel="noopener noreferrer">web-reader</a>
+          </div>
           <div
             className="side-menu-container-parent"
             style={this.state.isCollapsed ? { width: "70px" } : {}}

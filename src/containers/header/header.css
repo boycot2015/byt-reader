@@ -97,6 +97,30 @@
   .header-report-container {
     right: 15px !important;
   }
+  .setting-icon-parrent {
+    left: 0px !important;
+    margin-left: 0 !important;
+    width: 50px !important;
+    height: auto !important;
+    top: auto !important;
+    bottom: 280px !important;
+    position: fixed !important;
+  }
+  .setting-icon-container {
+    margin-left: 0 !important;
+  }
+  .sort-dialog-container {
+    position: absolute !important;
+    left: 50px !important;
+    top: auto !important;
+    top: calc(100vh - 465px) !important;
+    /* height: auto !important;
+    bottom: 180px !important; */
+    z-index: 999;
+  }
+  .sort-dialog-container + .sort-dialog-container {
+    left: 180px !important;
+  }
 }
 .download-demo-book {
   text-decoration: underline;

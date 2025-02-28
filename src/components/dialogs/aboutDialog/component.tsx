@@ -1,7 +1,6 @@
 import React from "react";
 import { Trans } from "react-i18next";
 import { AboutDialogProps, AboutDialogState } from "./interface";
-import { isElectron } from "react-device-detect";
 import { openExternalUrl } from "../../../utils/common";
 import toast from "react-hot-toast";
 import {
@@ -12,7 +11,6 @@ import {
 } from "../../../utils/file/export";
 import "./aboutDialog.css";
 import DatabaseService from "../../../utils/storage/databaseService";
-import { ConfigService } from "../../../assets/lib/kookit-extra-browser.min";
 
 declare var window: any;
 class AboutDialog extends React.Component<AboutDialogProps, AboutDialogState> {
@@ -50,105 +48,6 @@ class AboutDialog extends React.Component<AboutDialogProps, AboutDialogState> {
             >
               <Trans>Setting</Trans>
             </li>
-
-            <li
-              className="sort-by-category-list"
-              onClick={() => {
-                if (
-                  ConfigService.getReaderConfig("lang") === "zhCN" ||
-                  ConfigService.getReaderConfig("lang") === "zhTW" ||
-                  ConfigService.getReaderConfig("lang") === "zhMO"
-                ) {
-                  this.handleJump("https://koodoreader.com/zh/document");
-                } else {
-                  this.handleJump("https://koodoreader.com/en/document");
-                }
-              }}
-            >
-              <Trans>Document</Trans>
-            </li>
-            <li
-              className="sort-by-category-list"
-              onClick={async () => {
-                this.handleJump(`https://koodoreader.com/en/support`);
-              }}
-            >
-              <Trans>Feedback</Trans>
-            </li>
-            <li
-              className="sort-by-category-list"
-              onClick={() => {
-                this.props.handleFeedbackDialog(true);
-              }}
-            >
-              <Trans>Report</Trans>
-            </li>
-            <li
-              className="sort-by-category-list"
-              onClick={() => {
-                if (
-                  ConfigService.getReaderConfig("lang") === "zhCN" ||
-                  ConfigService.getReaderConfig("lang") === "zhTW" ||
-                  ConfigService.getReaderConfig("lang") === "zhMO"
-                ) {
-                  this.handleJump("https://koodoreader.com/zh/roadmap");
-                } else {
-                  this.handleJump("https://koodoreader.com/en/roadmap");
-                }
-              }}
-            >
-              <Trans>Roadmap</Trans>
-            </li>
-            <li
-              className="sort-by-category-list"
-              onClick={() => {
-                this.handleJump("https://koodoreader.com");
-              }}
-            >
-              <Trans>Our website</Trans>
-            </li>
-            <li
-              className="sort-by-category-list"
-              onClick={() => {
-                this.handleJump(
-                  "https://github.com/koodo-reader/koodo-reader#translation"
-                );
-              }}
-            >
-              <Trans>Translation</Trans>
-            </li>
-            <li
-              className="sort-by-category-list"
-              onClick={() => {
-                this.handleJump("https://github.com/koodo-reader/koodo-reader");
-              }}
-            >
-              <Trans>GitHub repository</Trans>
-            </li>
-
-            {isElectron && (
-              <li
-                className="sort-by-category-list"
-                onClick={() => {
-                  window
-                    .require("electron")
-                    .ipcRenderer.invoke("open-console", "ping");
-                }}
-              >
-                <Trans>Open console</Trans>
-              </li>
-            )}
-            {this.props.isNewWarning && (
-              <li
-                className="sort-by-category-list"
-                onClick={() => {
-                  this.handleJump("https://koodoreader.com/en");
-                }}
-                style={{ color: "rgb(35, 170, 242)" }}
-              >
-                <Trans>New version</Trans>
-              </li>
-            )}
             <li
               className="sort-by-category-list"
               onMouseEnter={() => {
@@ -171,7 +70,7 @@ class AboutDialog extends React.Component<AboutDialogProps, AboutDialogState> {
               ? {
                   position: "absolute",
                   left: "665px",
-                  top: "250px",
+                  top: "100px",
                 }
               : { display: "none" }
           }

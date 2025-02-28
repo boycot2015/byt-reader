@@ -18,7 +18,6 @@ import {
   upgradeStorage,
 } from "../../utils/file/common";
 import toast from "react-hot-toast";
-import { Trans } from "react-i18next";
 import { SyncHelper } from "../../assets/lib/kookit-extra-browser.min";
 import ConfigUtil from "../../utils/file/configUtil";
 import DatabaseService from "../../utils/storage/databaseService";
@@ -27,7 +26,6 @@ import BookUtil from "../../utils/file/bookUtil";
 import {
   addChatBox,
   getChatLocale,
-  openExternalUrl,
   removeChatBox,
 } from "../../utils/common";
 import { driveList } from "../../constants/driveList";
@@ -175,6 +173,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     }
   };
   handleLocalSync = async () => {
+    if (!isElectron) return
     let lastSyncTime = getLastSyncTimeFromConfigJson();
     if (
       ConfigService.getItem("lastSyncTime") &&
@@ -370,77 +369,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
               <span className="icon-archive header-archive-icon"></span>
             </span>
           </div>
-
-          <div
-            className="setting-icon-container"
-            onClick={async () => {
-              this.setState({ isSync: true });
-              // let result = await CoverUtil.uploadCover("1738469806090.jpeg");
-              // let result = await CoverUtil.downloadCover("1738469806090.jpeg");
-              // let result = await CoverUtil.getCloudCoverList();
-              // let result = await CoverUtil.deleteCloudCover(
-              //   "1738469806090.jpeg"
-              // );
-              // let syncUtil = await SyncService.getSyncUtil();
-              // let result = await syncUtil.listFiles("cover");
-              // let result = await syncUtil.deleteFile(
-              //   "1738469806090.jpeg",
-              //   "cover"
-              // );
-              // console.log(result);
-              // return;
-              if (!isElectron && !this.props.isAuthed) {
-                toast(
-                  this.props.t(
-                    "This feature is not available in the free version"
-                  )
-                );
-              }
-              if (this.props.isAuthed) {
-                this.handleCloudSync();
-              } else {
-                this.handleLocalSync();
-              }
-            }}
-            style={{ marginTop: "2px" }}
-          >
-            <span
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content={this.props.t("Sync")}
-              data-tooltip-place="left"
-            >
-              <span
-                className={
-                  "icon-sync setting-icon" +
-                  (this.state.isSync ? " icon-rotate" : "")
-                }
-                style={
-                  this.state.isdataChange ? { color: "rgb(35, 170, 242)" } : {}
-                }
-              ></span>
-            </span>
-          </div>
         </div>
-
-        {!this.props.isAuthed ? (
-          <div
-            className="header-report-container"
-            onClick={() => {
-              if (isElectron) {
-                this.props.history.push("/login");
-              } else {
-                if (navigator.language.startsWith("zh")) {
-                  openExternalUrl("https://www.koodoreader.com/zh/about-pro");
-                } else {
-                  openExternalUrl("https://www.koodoreader.com/en/about-pro");
-                }
-              }
-            }}
-          >
-            <Trans>Pro version</Trans>
-          </div>
-        ) : null}
-
         <ImportLocal
           {...{
             handleDrag: this.props.handleDrag,
